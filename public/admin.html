@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة الطلبات | بريموس بيتزا</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="admin-body">
+
+<div class="wrap">
+  <div class="admin-gate" id="admin-gate">
+    <h2 style="color:var(--gold); margin-bottom:6px;">لوحة الطلبات</h2>
+    <p style="color:#D8C8AA; font-size:.9rem;">دخول الموظفين فقط</p>
+    <input type="password" id="admin-pass" placeholder="كلمة المرور">
+    <button class="btn btn-primary" id="admin-enter" style="width:100%">دخول</button>
+    <p style="font-size:.75rem; color:#e08; margin-top:10px; display:none;" id="admin-err">كلمة مرور غير صحيحة</p>
+  </div>
+
+  <div id="admin-dashboard" style="display:none">
+    <div class="admin-head">
+      <h2>طلبات بريموس بيتزا — الدقي</h2>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-ghost btn-sm" id="admin-refresh">🔄 تحديث</button>
+        <a class="btn btn-ghost btn-sm" href="/">رجوع للموقع</a>
+      </div>
+    </div>
+    <div class="admin-stats" id="admin-stats"></div>
+    <div id="orders-list"></div>
+  </div>
+</div>
+
+<script>
+let ADMIN_KEY = '';
+const STATUS_LABELS = {pending:'قيد الانتظار', preparing:'بيتحضر', out:'في الطريق', delivered:'تم التوصيل'};
+
+document.getElementById('admin-enter').addEventListener('click', tryLogin);
+document.getElementById('admin-pass').addEventListener('keydown', (e)=>{ if(e.key==='Enter') tryLogin(); });
+document.getElementById('admin-refresh').addEventListener('click', loadOrders);
+
+async function tryLogin(){
+  const val = document.getElementById('admin-pass').value;
+  ADMIN_KEY = val;
+  const ok = await loadOrders(true);
+  if(ok){
+    document.getElementById('admin-gate').style.display = 'none';
+    document.getElementById('admin-dashboard').style.display = 'block';
+    sessionStorage.setItem('primos_admin_key', val);
+  }else{
+    document.getElementById('admin-err').style.display = 'block';
+    ADMIN_KEY = '';
+  }
+}
+
+async function loadOrders(silent){
+  const listEl = document.getElementById('orders-list');
+  const statsEl = document.getElementById('admin-stats');
+  if(!silent) listEl.innerHTML = '<p style="color:#D8C8AA;">جاري تحميل الطلبات...</p>';
+
+  try{
+    const res = await fetch('/api/orders', { headers: { 'x-admin-key': ADMIN_KEY } });
+    if(res.status === 401) return false;
+    const orders = await res.json();
+
+    if(orders.length===0){
+      listEl.innerHTML = '<div class="admin-empty">لسه مفيش طلبات وصلت 🍕</div>';
+      statsEl.innerHTML = '';
+      return true;
+    }
+
+    const totalRevenue = orders.reduce((s,o)=>s+o.total,0);
+    const pendingCount = orders.filter(o=>o.status==='pending').length;
+    statsEl.innerHTML = `
+      <div class="admin-stat"><b>${orders.length}</b><span>إجمالي الطلبات</span></div>
+      <div class="admin-stat"><b>${pendingCount}</b><span>قيد الانتظار</span></div>
+      <div class="admin-stat"><b>${totalRevenue} ج.م</b><span>إجمالي المبيعات</span></div>
+    `;
+
+    listEl.innerHTML = orders.map(o=>{
+      const itemsHtml = o.items.map(i=>`<li>${i.name} × ${i.qty} — ${i.price*i.qty} ج.م</li>`).join('');
+      return `<div class="order-card">
+        <div>
+          <span class="status-pill status-${o.status}">${STATUS_LABELS[o.status]||o.status}</span>
+          <div class="oid">#${o.id}</div>
+          <div class="meta">${o.name} · ${o.phone} · ${o.address}${o.notes ? ' · ملاحظة: '+o.notes : ''}<br>
+            ${new Date(o.createdAt).toLocaleString('ar-EG')} · دفع: ${o.payment==='cash'?'كاش':'كارت'} عند الاستلام</div>
+          <ul>${itemsHtml}</ul>
+          <div style="margin-top:8px; font-weight:800;">الإجمالي: ${o.total} ج.م</div>
+        </div>
+        <select class="status-select" data-order="${o.id}">
+          <option value="pending" ${o.status==='pending'?'selected':''}>قيد الانتظار</option>
+          <option value="preparing" ${o.status==='preparing'?'selected':''}>بيتحضر</option>
+          <option value="out" ${o.status==='out'?'selected':''}>في الطريق</option>
+          <option value="delivered" ${o.status==='delivered'?'selected':''}>تم التوصيل</option>
+        </select>
+      </div>`;
+    }).join('');
+
+    listEl.querySelectorAll('.status-select').forEach(sel=>{
+      sel.addEventListener('change', async ()=>{
+        const orderId = sel.dataset.order;
+        try{
+          await fetch('/api/orders/'+orderId, {
+            method:'PATCH',
+            headers:{'Content-Type':'application/json', 'x-admin-key': ADMIN_KEY},
+            body: JSON.stringify({status: sel.value})
+          });
+          loadOrders(true);
+        }catch(e){ console.error('status update failed', e); }
+      });
+    });
+
+    return true;
+  }catch(err){
+    console.error('load orders failed', err);
+    listEl.innerHTML = '<div class="admin-empty">حصل خطأ في تحميل الطلبات. جرب تحديث الصفحة.</div>';
+    return true;
+  }
+}
+
+// Restore session within this tab if already logged in
+const savedKey = sessionStorage.getItem('primos_admin_key');
+if(savedKey){
+  ADMIN_KEY = savedKey;
+  loadOrders(true).then(ok=>{
+    if(ok){
+      document.getElementById('admin-gate').style.display = 'none';
+      document.getElementById('admin-dashboard').style.display = 'block';
+    }else{
+      sessionStorage.removeItem('primos_admin_key');
+    }
+  });
+}
+</script>
+</body>
+</html>

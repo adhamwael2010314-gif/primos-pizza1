@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بريموس بيتزا | فرع الدقي — اطلب أونلاين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo">بريموس<span>بيتزا</span></div>
+    <nav><ul>
+      <li><a href="#menu">اطلب أونلاين</a></li>
+      <li><a href="#location">الموقع</a></li>
+    </ul></nav>
+    <div class="header-actions">
+      <a class="icon-btn" href="tel:+20000000000" title="اتصل بنا">📞</a>
+      <button class="icon-btn" id="cart-toggle" title="السلة">🛒<span class="cart-badge" id="cart-count" style="display:none">0</span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">فرع الدقي · طلب أونلاين مباشر</span>
+    <h1>اطلب بيتزتك المفضلة<br><em>وهي جاية لحد عندك</em></h1>
+    <p>اختار من المنيو، ضيف للسلة، وأكد طلبك أونلاين — الدفع كاش أو بالكارت عند الاستلام. أو لو تفضل تتكلم مع حد، اتصل بينا على طول.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#menu">شوف المنيو واطلب</a>
+      <a class="btn btn-ghost" href="tel:+20000000000">📞 اتصل بنا الآن</a>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">المنيو</span>
+      <h2>اختار طلبك</h2>
+      <p>الأسعار تقريبية للعرض — حدّثها في server.js بالأسعار الفعلية قبل النشر.</p>
+    </div>
+    <div class="menu-grid" id="menu-grid">
+      <p style="color:#8a7a60;">جاري تحميل المنيو...</p>
+    </div>
+  </div>
+</section>
+
+<section class="location" id="location">
+  <div class="wrap loc-grid">
+    <div class="loc-card">
+      <h3>موقعنا وساعات العمل</h3>
+      <p style="color:#E9DCC6; margin-bottom:14px;">مكة المكرمة، الدقي، قسم الدقي، محافظة الجيزة</p>
+      <table class="hours">
+        <tr><td>الأحد</td><td>١٠:٠٠ص – ١٢:٠٠ص</td></tr>
+        <tr><td>الاثنين</td><td>١٠:٠٠ص – ١٢:٠٠ص</td></tr>
+        <tr><td>الثلاثاء</td><td>١٠:٠٠ص – ١٢:٠٠ص</td></tr>
+        <tr><td>الأربعاء</td><td>١٠:٠٠ص – ١٢:٠٠ص</td></tr>
+        <tr><td>الخميس</td><td>١٠:٠٠ص – ١:٠٠ص</td></tr>
+        <tr><td>الجمعة</td><td>١٠:٠٠ص – ١:٠٠ص</td></tr>
+        <tr><td>السبت</td><td>١٠:٠٠ص – ١٢:٠٠ص</td></tr>
+      </table>
+      <p style="font-size:.78rem; color:#9a8a70; margin-top:10px;">* قد تختلف ساعات العمل في المناسبات والعطلات الرسمية</p>
+      <div style="margin-top:22px; display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="btn btn-primary" href="tel:+20000000000">اتصل بنا</a>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=%D8%A8%D8%B1%D9%8A%D9%85%D9%88%D8%B3+%D8%A8%D9%8A%D8%AA%D8%B2%D8%A7+%D8%A7%D9%84%D8%AF%D9%82%D9%8A" target="_blank" rel="noopener">افتح في خرائط جوجل</a>
+      </div>
+    </div>
+    <div class="map-frame">
+      <iframe src="https://maps.google.com/maps?q=%D8%A8%D8%B1%D9%8A%D9%85%D9%88%D8%B3%20%D8%A8%D9%8A%D8%AA%D8%B2%D8%A7%20%D8%A7%D9%84%D8%AF%D9%82%D9%8A&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" title="خريطة بريموس بيتزا الدقي"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">بريموس<span>بيتزا</span></div>
+    <p>فرع الدقي · مكة المكرمة، قسم الدقي، محافظة الجيزة</p>
+    <p style="margin-top:6px;">© 2026 بريموس بيتزا</p>
+    <a class="admin-link" href="/admin.html">لوحة الطلبات (للموظفين)</a>
+  </div>
+</footer>
+
+<a class="fab-call" href="tel:+20000000000" title="اتصل بنا">📞</a>
+
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="cart-drawer">
+  <div class="drawer-head"><h3>سلة الطلبات</h3><button class="drawer-close" id="cart-close">✕</button></div>
+  <div class="drawer-body" id="cart-body"></div>
+  <div class="drawer-foot">
+    <div class="total-row"><span>الإجمالي</span><span id="cart-total">٠ ج.م</span></div>
+    <button class="btn btn-primary" style="width:100%" id="checkout-btn" disabled>إتمام الطلب</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="checkout-overlay">
+  <div class="modal">
+    <button class="modal-close" id="checkout-close">✕</button>
+    <div id="checkout-form-wrap">
+      <h3>بيانات التوصيل</h3>
+      <p class="hint">الدفع كاش أو بالكارت عند الاستلام</p>
+      <div class="field"><label>الاسم</label><input type="text" id="f-name" placeholder="اسمك بالكامل"></div>
+      <div class="field"><label>رقم الموبايل</label><input type="tel" id="f-phone" placeholder="01xxxxxxxxx"></div>
+      <div class="field"><label>العنوان بالتفصيل</label><textarea id="f-address" rows="3" placeholder="اسم الشارع، رقم العمارة، الدور..."></textarea></div>
+      <div class="field"><label>ملاحظات (اختياري)</label><input type="text" id="f-notes" placeholder="مثلاً: صوص إضافي، بدون بصل..."></div>
+      <div class="field">
+        <label>طريقة الدفع</label>
+        <div class="pay-options">
+          <div class="pay-opt active" data-pay="cash">💵 كاش عند الاستلام</div>
+          <div class="pay-opt" data-pay="card">💳 كارت عند الاستلام</div>
+        </div>
+      </div>
+      <p class="form-error" id="form-error"></p>
+      <button class="btn btn-primary" style="width:100%" id="submit-order">تأكيد الطلب</button>
+    </div>
+    <div class="order-success" id="order-success" style="display:none">
+      <div class="stamp-ok">✓</div>
+      <h3>تم استلام طلبك!</h3>
+      <p class="hint">فريق بريموس هيتصل بيك لتأكيد الطلب</p>
+      <div class="order-id" id="success-order-id"></div>
+      <button class="btn btn-ghost" style="width:100%" id="success-close">تمام</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let MENU = [];
+let cart = {};
+let selectedPay = 'cash';
+
+async function loadMenu(){
+  const grid = document.getElementById('menu-grid');
+  try{
+    const res = await fetch('/api/menu');
+    MENU = await res.json();
+    grid.innerHTML = '';
+    MENU.forEach(item=>{
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      card.innerHTML = `
+        ${item.badge ? `<span class="badge">${item.badge}</span>` : ''}
+        <h3>${item.name}</h3>
+        <p class="desc">${item.desc}</p>
+        <div class="item-price">${item.price} ج.م</div>
+        <div class="item-actions">
+          <div class="qty-row">
+            <button data-act="dec" data-id="${item.id}">−</button>
+            <span id="qty-${item.id}">0</span>
+            <button data-act="inc" data-id="${item.id}">+</button>
+          </div>
+          <button class="add-btn" data-add="${item.id}">أضف للسلة</button>
+        </div>`;
+      grid.appendChild(card);
+    });
+  }catch(err){
+    grid.innerHTML = '<p style="color:#e08;">تعذر تحميل المنيو. تأكد إن السيرفر شغال.</p>';
+  }
+}
+
+const menuGrid = document.getElementById('menu-grid');
+menuGrid.addEventListener('click', (e)=>{
+  const inc = e.target.closest('[data-act="inc"]');
+  const dec = e.target.closest('[data-act="dec"]');
+  const add = e.target.closest('[data-add]');
+  if(inc) bumpDisplay(inc.dataset.id, 1);
+  if(dec) bumpDisplay(dec.dataset.id, -1);
+  if(add) addToCart(add.dataset.add);
+});
+function bumpDisplay(id, delta){
+  const el = document.getElementById('qty-'+id);
+  let v = parseInt(el.textContent) + delta;
+  if(v<0) v=0;
+  el.textContent = v;
+}
+function addToCart(id){
+  const el = document.getElementById('qty-'+id);
+  let qty = parseInt(el.textContent);
+  if(qty<=0) qty = 1;
+  cart[id] = (cart[id]||0) + qty;
+  el.textContent = 0;
+  renderCart();
+  openCart();
+}
+
+const overlay = document.getElementById('overlay');
+const drawer = document.getElementById('cart-drawer');
+const cartBody = document.getElementById('cart-body');
+const cartTotalEl = document.getElementById('cart-total');
+const cartCountEl = document.getElementById('cart-count');
+const checkoutBtn = document.getElementById('checkout-btn');
+
+function renderCart(){
+  const ids = Object.keys(cart).filter(id=>cart[id]>0);
+  if(ids.length===0){
+    cartBody.innerHTML = `<div class="cart-empty">السلة فاضية — ابدأ تضيف من المنيو 🍕</div>`;
+    checkoutBtn.disabled = true;
+    cartCountEl.style.display = 'none';
+    cartTotalEl.textContent = '٠ ج.م';
+    return;
+  }
+  let total = 0, count = 0;
+  cartBody.innerHTML = ids.map(id=>{
+    const item = MENU.find(m=>m.id===id);
+    const lineTotal = item.price * cart[id];
+    total += lineTotal; count += cart[id];
+    return `<div class="cart-line">
+      <div><div class="name">${item.name}</div><div class="sub">${item.price} ج.م × ${cart[id]}</div></div>
+      <div class="qty-row">
+        <button data-cart-act="dec" data-id="${id}">−</button>
+        <span>${cart[id]}</span>
+        <button data-cart-act="inc" data-id="${id}">+</button>
+      </div>
+    </div>`;
+  }).join('');
+  cartTotalEl.textContent = total + ' ج.م';
+  cartCountEl.textContent = count;
+  cartCountEl.style.display = 'flex';
+  checkoutBtn.disabled = false;
+}
+cartBody.addEventListener('click', (e)=>{
+  const btn = e.target.closest('[data-cart-act]');
+  if(!btn) return;
+  const id = btn.dataset.id;
+  if(btn.dataset.cartAct==='inc') cart[id]++;
+  if(btn.dataset.cartAct==='dec'){ cart[id]--; if(cart[id]<=0) delete cart[id]; }
+  renderCart();
+});
+function openCart(){ overlay.classList.add('open'); drawer.classList.add('open'); }
+function closeCart(){ overlay.classList.remove('open'); drawer.classList.remove('open'); }
+document.getElementById('cart-toggle').addEventListener('click', openCart);
+document.getElementById('cart-close').addEventListener('click', closeCart);
+overlay.addEventListener('click', ()=>{ closeCart(); closeCheckout(); });
+
+const checkoutOverlay = document.getElementById('checkout-overlay');
+const formWrap = document.getElementById('checkout-form-wrap');
+const successWrap = document.getElementById('order-success');
+
+checkoutBtn.addEventListener('click', ()=>{
+  closeCart();
+  checkoutOverlay.classList.add('open');
+  formWrap.style.display = 'block';
+  successWrap.style.display = 'none';
+});
+document.getElementById('checkout-close').addEventListener('click', closeCheckout);
+document.getElementById('success-close').addEventListener('click', ()=>{
+  closeCheckout();
+  cart = {};
+  renderCart();
+});
+function closeCheckout(){ checkoutOverlay.classList.remove('open'); }
+
+document.querySelectorAll('.pay-opt').forEach(opt=>{
+  opt.addEventListener('click', ()=>{
+    document.querySelectorAll('.pay-opt').forEach(o=>o.classList.remove('active'));
+    opt.classList.add('active');
+    selectedPay = opt.dataset.pay;
+  });
+});
+
+document.getElementById('submit-order').addEventListener('click', async ()=>{
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const address = document.getElementById('f-address').value.trim();
+  const notes = document.getElementById('f-notes').value.trim();
+  const errorEl = document.getElementById('form-error');
+
+  if(!name || !phone || !address){
+    errorEl.textContent = 'من فضلك املأ كل الحقول المطلوبة';
+    errorEl.style.display = 'block';
+    return;
+  }
+  errorEl.style.display = 'none';
+
+  const submitBtn = document.getElementById('submit-order');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'جاري إرسال الطلب...';
+
+  const ids = Object.keys(cart).filter(id=>cart[id]>0);
+  const items = ids.map(id=>({id, qty:cart[id]}));
+
+  try{
+    const res = await fetch('/api/orders', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({items, name, phone, address, notes, payment: selectedPay})
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'فشل إرسال الطلب');
+
+    document.getElementById('success-order-id').textContent = '#' + data.id;
+    formWrap.style.display = 'none';
+    successWrap.style.display = 'block';
+  }catch(err){
+    errorEl.textContent = err.message || 'حصل خطأ في إرسال الطلب، حاول تاني أو اتصل بينا مباشرة.';
+    errorEl.style.display = 'block';
+  }finally{
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'تأكيد الطلب';
+  }
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', function(e){
+    const target = document.querySelector(this.getAttribute('href'));
+    if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+  });
+});
+
+renderCart();
+loadMenu();
+</script>
+</body>
+</html>

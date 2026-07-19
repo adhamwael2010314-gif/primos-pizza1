@@ -1,0 +1,15 @@
+{
+  "name": "primos-pizza-order",
+  "version": "1.0.0",
+  "description": "Online ordering site + staff dashboard for Primo's Pizza (Dokki branch)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
