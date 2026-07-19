@@ -31,7 +31,7 @@
     <p>اختار من المنيو، ضيف للسلة، وأكد طلبك أونلاين — الدفع كاش أو بالكارت عند الاستلام. أو لو تفضل تتكلم مع حد، اتصل بينا على طول.</p>
     <div class="hero-ctas">
       <a class="btn btn-primary" href="#menu">شوف المنيو واطلب</a>
-      <a class="btn btn-ghost" href="tel:+20000000000">📞 اتصل بنا الآن</a>
+      <a class="btn btn-ghost-light" href="tel:+20000000000">📞 اتصل بنا الآن</a>
     </div>
   </div>
 </section>
@@ -66,7 +66,7 @@
       <p style="font-size:.78rem; color:#9a8a70; margin-top:10px;">* قد تختلف ساعات العمل في المناسبات والعطلات الرسمية</p>
       <div style="margin-top:22px; display:flex; gap:12px; flex-wrap:wrap;">
         <a class="btn btn-primary" href="tel:+20000000000">اتصل بنا</a>
-        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=%D8%A8%D8%B1%D9%8A%D9%85%D9%88%D8%B3+%D8%A8%D9%8A%D8%AA%D8%B2%D8%A7+%D8%A7%D9%84%D8%AF%D9%82%D9%8A" target="_blank" rel="noopener">افتح في خرائط جوجل</a>
+        <a class="btn btn-ghost-light" href="https://www.google.com/maps/search/?api=1&query=%D8%A8%D8%B1%D9%8A%D9%85%D9%88%D8%B3+%D8%A8%D9%8A%D8%AA%D8%B2%D8%A7+%D8%A7%D9%84%D8%AF%D9%82%D9%8A" target="_blank" rel="noopener">افتح في خرائط جوجل</a>
       </div>
     </div>
     <div class="map-frame">
@@ -101,7 +101,7 @@
     <button class="modal-close" id="checkout-close">✕</button>
     <div id="checkout-form-wrap">
       <h3>بيانات التوصيل</h3>
-      <p class="hint">الدفع كاش أو بالكارت عند الاستلام</p>
+      <p class="hint">الدفع كاش عند الاستلام أو أونلاين بالكارت دلوقتي</p>
       <div class="field"><label>الاسم</label><input type="text" id="f-name" placeholder="اسمك بالكامل"></div>
       <div class="field"><label>رقم الموبايل</label><input type="tel" id="f-phone" placeholder="01xxxxxxxxx"></div>
       <div class="field"><label>العنوان بالتفصيل</label><textarea id="f-address" rows="3" placeholder="اسم الشارع، رقم العمارة، الدور..."></textarea></div>
@@ -110,7 +110,7 @@
         <label>طريقة الدفع</label>
         <div class="pay-options">
           <div class="pay-opt active" data-pay="cash">💵 كاش عند الاستلام</div>
-          <div class="pay-opt" data-pay="card">💳 كارت عند الاستلام</div>
+          <div class="pay-opt" data-pay="online">💳 دفع أونلاين بالكارت</div>
         </div>
       </div>
       <p class="form-error" id="form-error"></p>
@@ -290,6 +290,12 @@ document.getElementById('submit-order').addEventListener('click', async ()=>{
     const data = await res.json();
     if(!res.ok) throw new Error(data.error || 'فشل إرسال الطلب');
 
+    if(data.paymentUrl){
+      // Send the customer to Paymob's hosted payment page to enter their card.
+      window.location.href = data.paymentUrl;
+      return;
+    }
+
     document.getElementById('success-order-id').textContent = '#' + data.id;
     formWrap.style.display = 'none';
     successWrap.style.display = 'block';
@@ -314,3 +320,4 @@ loadMenu();
 </script>
 </body>
 </html>
+
